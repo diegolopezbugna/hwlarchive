@@ -22,7 +22,7 @@ bool HWLContainer::Open(std::string filename) {
 		printf("Invalid format: %s\n", filename.c_str());
 		return false;
 	}
-	printf("  header.uFileTableOffset: %ul\n", header.uFileTableOffset);
+	//printf("  header.uFileTableOffset: %ul\n", header.uFileTableOffset);
 	fseek(pFile, header.uFileTableOffset, SEEK_SET);
 
 	std::vector<HWLNode> vNodes;
@@ -47,7 +47,7 @@ bool HWLContainer::Open(std::string filename) {
 
 	for (HWLNode &node : vNodes) {
 		mNodes[node.sTextureName] = node;
-		printf(" - node: sTextureName: %s uTextureOffset: %ul uNodeOffsetInFileTable: %ul\n", node.sTextureName.c_str(), node.uTextureOffset, node.uNodeOffsetInFileTable);
+		//printf(" - node: sTextureName: %s uTextureOffset: %ul uNodeOffsetInFileTable: %ul\n", node.sTextureName.c_str(), node.uTextureOffset, node.uNodeOffsetInFileTable);
 	}
 
 	return true;
