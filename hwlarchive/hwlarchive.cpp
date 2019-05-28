@@ -44,6 +44,12 @@ int updateTexture(HWLContainer* pD3DBitmaps, std::string textureName) {
 
 int main()
 {
+	printf("\n");
+	printf("Copy .exe and zlibwapi.dll to DATA folder.\n");
+	printf("Create 'bmps' folder with the bmps (24 or 32 bits) that will be updated in the d3dbitmaps.hwl file.\n");
+	printf("Beware that contents will be appended, so if you make the update several times the file will be larger every time.\n");
+	printf("\n");
+
 	printf("Starting...\n");
 
 	HWLContainer* pD3DBitmaps = new HWLContainer();
