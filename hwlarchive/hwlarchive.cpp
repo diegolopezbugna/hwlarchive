@@ -3,8 +3,10 @@
 
 #include "hwlarchive.h"
 
-const char* dataFolder = "C:\\Program Files (x86)\\3DO\\Might and Magic VII\\DATA\\";
-const char* texturesFolder = "E:\\MM7\\converted\\";
+//const char* dataFolder = "C:\\Program Files (x86)\\3DO\\Might and Magic VII\\DATA\\";
+//const char* texturesFolder = "E:\\MM7\\converted\\";
+const char* dataFolder = "";
+const char* texturesFolder = "bmps\\";
 BmpReader bmpReader;
 
 int updateTexture(HWLContainer* pD3DBitmaps, std::string textureName) {
