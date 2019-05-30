@@ -42,18 +42,19 @@ int updateTexture(HWLContainer* pD3DBitmaps, std::string textureName) {
 	free(compressedPixels);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-	printf("\n");
+	printf("hwlarchive v0.2\n\n");
+	printf("usage: hwlarchive [name.hwl]   --> d3dbitmap.hwl if none provided\n\n");
 	printf("Copy .exe and zlibwapi.dll to DATA folder.\n");
-	printf("Create 'bmps' folder with the bmps (24 or 32 bits) that will be updated in the d3dbitmaps.hwl file.\n");
+	printf("Create 'bmps' folder with the bmps (24 or 32 bits) that will be updated in the hwl file.\n");
 	printf("Beware that contents will be appended, so if you make the update several times the file will be larger every time.\n");
 	printf("\n");
 
 	printf("Starting...\n");
 
 	HWLContainer* pD3DBitmaps = new HWLContainer();
-	pD3DBitmaps->Open(std::string(dataFolder) + "d3dbitmap.hwl");
+	pD3DBitmaps->Open(std::string(dataFolder) + (argc > 1 ? argv[1] : "d3dbitmap.hwl"));
 
 	auto textureNames = pD3DBitmaps->GetAllTextureNames();
 	for (auto textureName : textureNames) {

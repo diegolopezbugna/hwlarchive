@@ -76,7 +76,7 @@ void HWLContainer::UpdateTexture(std::string textureName, uint32_t width, uint32
 
 	fseek(pFile, newTextureOffset, SEEK_SET);
 	fwrite(&header, sizeof(HWLTextureHeader), 1, pFile);
-	fwrite(pPixels, sizeof(uint16_t), header.uWidth * header.uHeight, pFile); // TODO: cantidad de pixeles
+	fwrite(pPixels, sizeof(uint16_t), header.uWidth * header.uHeight, pFile);
 
 	printf(" texture %s updated\n", textureName.c_str());
 }

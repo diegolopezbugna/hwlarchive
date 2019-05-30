@@ -8,7 +8,7 @@ uint16_t *BmpReader::Read24or32BitsFileTo16Bits(std::string fileName, uint32_t &
 	}
 
 	BITMAPFILEHEADER header1;
-	BITMAPINFOHEADER header2; // TODO: another bmp version?
+	BITMAPINFOHEADER header2;
 
 	fread(&header1, sizeof(BITMAPFILEHEADER), 1, pFile);
 	fread(&header2, sizeof(BITMAPINFOHEADER), 1, pFile);
@@ -24,7 +24,6 @@ uint16_t *BmpReader::Read24or32BitsFileTo16Bits(std::string fileName, uint32_t &
 
 	uint16_t *pPixels16 = new uint16_t[header2.biWidth * header2.biHeight]; // 16 bits
 
-	// TODO: tiene que ser multiplo de 4
 	for (int h = 0; h < header2.biHeight; h++) {
 		for (int w = 0; w < header2.biWidth; w++) {
 
@@ -38,7 +37,7 @@ uint16_t *BmpReader::Read24or32BitsFileTo16Bits(std::string fileName, uint32_t &
 			uint16_t alpha = header2.biBitCount == 32 ? (uint16_t)(pPixels[src_i + 3]) : 0;
 			uint16_t sum = (red) | (grn << 5) | (blu << 10) | (alpha << 15);
 
-			int dest_i = ((header2.biHeight - 1 - h) * header2.biWidth + w); // * 2;
+			int dest_i = ((header2.biHeight - 1 - h) * header2.biWidth + w);
 			memcpy(&pPixels16[dest_i], &sum, 2);
 		}
 	}
