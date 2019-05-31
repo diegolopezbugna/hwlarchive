@@ -7,6 +7,7 @@
 #include "BmpReader.h"
 #include <cstring>
 #include <vector>
+#include <filesystem>
 
 namespace zlib {
 	#define ZLIB_WINAPI

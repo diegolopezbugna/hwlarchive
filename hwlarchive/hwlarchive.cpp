@@ -53,6 +53,12 @@ int main(int argc, char *argv[])
 
 	printf("Starting...\n");
 
+	for (auto& entry : std::experimental::filesystem::directory_iterator(texturesFolder)) {
+		if (entry.path().extension().string() == ".bmp") {
+
+		}
+	}
+
 	HWLContainer* pD3DBitmaps = new HWLContainer();
 	pD3DBitmaps->Open(std::string(dataFolder) + (argc > 1 ? argv[1] : "d3dbitmap.hwl"));
 
