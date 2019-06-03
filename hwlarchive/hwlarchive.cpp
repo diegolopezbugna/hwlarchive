@@ -4,12 +4,12 @@
 #include "hwlarchive.h"
 
 //const char* dataFolder = "C:\\Program Files (x86)\\3DO\\Might and Magic VII\\DATA\\";
-//const char* texturesFolder = "E:\\MM7\\converted\\";
+const char* texturesFolder = "E:\\MM7\\converted\\";
 const char* dataFolder = "";
-const char* texturesFolder = "bmps\\";
+//const char* texturesFolder = "bmps\\";
 BmpReader bmpReader;
 
-int updateTexture(HWLContainer* pD3DBitmaps, std::string textureName) {
+int updateTexture(HWLContainer* hwlContainer, std::string textureName) {
 	uint32_t width = 0;
 	uint32_t height = 0;
 
@@ -36,7 +36,7 @@ int updateTexture(HWLContainer* pD3DBitmaps, std::string textureName) {
 		return -1;
 	}
 
-	pD3DBitmaps->UpdateTexture(textureName, width, height, compressedSize, (uint16_t *)compressedPixels);
+	hwlContainer->UpdateTexture(textureName, width, height, compressedSize, compressedPixels);
 
 	delete[] pixels;
 	free(compressedPixels);
@@ -53,21 +53,30 @@ int main(int argc, char *argv[])
 
 	printf("Starting...\n");
 
-	for (auto& entry : std::experimental::filesystem::directory_iterator(texturesFolder)) {
-		if (entry.path().extension().string() == ".bmp") {
+	std::string hwlPath = std::string(dataFolder) + (argc > 1 ? argv[1] : "d3dbitmap.hwl");
 
+	HWLContainer* hwlContainer = new HWLContainer();
+
+	bool hwlExists = std::experimental::filesystem::exists(hwlPath);
+	if (hwlExists) {
+		hwlContainer->Open(hwlPath);
+	}
+	else {
+		std::vector<std::string> textureNames;
+		for (auto& entry : std::experimental::filesystem::directory_iterator(texturesFolder)) {
+			if (entry.path().extension().string() == ".bmp") {
+				textureNames.push_back(entry.path().stem().string());
+			}
 		}
+		hwlContainer->Create(hwlPath, textureNames);
 	}
 
-	HWLContainer* pD3DBitmaps = new HWLContainer();
-	pD3DBitmaps->Open(std::string(dataFolder) + (argc > 1 ? argv[1] : "d3dbitmap.hwl"));
-
-	auto textureNames = pD3DBitmaps->GetAllTextureNames();
-	for (auto textureName : textureNames) {
-		updateTexture(pD3DBitmaps, textureName);
+	auto textureNames = hwlContainer->GetAllTextureNames();
+	for (auto& textureName : textureNames) {
+		updateTexture(hwlContainer, textureName);
 	}
 
-	delete pD3DBitmaps;
+	delete hwlContainer;
 
 	printf("Finished. Press enter to exit.\n");
 	scanf("enter");

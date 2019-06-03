@@ -34,8 +34,9 @@ public:
 	virtual ~HWLContainer();
 
 	bool Open(std::string filename);
+	bool Create(std::string filename, std::vector<std::string> textureNames);
 	std::vector<std::string> GetAllTextureNames();
-	void UpdateTexture(std::string textureName, uint32_t width, uint32_t height, uint32_t compressedSize, uint16_t *pPixels);
+	void UpdateTexture(std::string textureName, uint32_t width, uint32_t height, uint32_t compressedSize, uint8_t *compressedPixels);
 
 protected:
 	FILE *pFile;
